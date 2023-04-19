@@ -1,0 +1,115 @@
+\newcommand{\unidefault}{}%
+\newcommand{\university}[1]{%
+    \renewcommand{\unidefault}{#1}}%
+
+\newcommand{\subtitledefault}{}%
+\newcommand{\subtitle}[1]{%
+    \renewcommand{\subtitledefault}{#1}}%
+
+\newcommand{\logodefault}{}%
+\newcommand{\logo}[1]{%
+    \renewcommand{\logodefault}{#1}}%
+
+\newcommand{\subjectdefault}{}%
+\newcommand{\subject}[1]{%
+    \renewcommand{\subjectdefault}{#1}}%
+
+\newcommand{\subjectiddefault}{}%
+\newcommand{\subjectid}[1]{%
+    \renewcommand{\subjectiddefault}{#1}}%
+
+\newcommand{\teacherdefault}{}%
+\newcommand{\teacher}[1]{%
+    \renewcommand{\teacherdefault}{#1}}%
+
+\makeatletter%
+\renewcommand\maketitle{%
+\thispagestyle{empty}
+ \newpage%
+  \null%
+  \vskip 2em%
+  \begin{center}%
+  \let \footnote \thanks%
+
+      \hrule%
+      \vskip 2em%
+      {\Huge\bfseries\sffamily%
+            \par\centering%
+            \@title%
+      }%
+      \ifdefempty{\subtitledefault}{}{
+            \vspace{2em}%
+            {\LARGE\bfseries\sffamily%
+                  \centering%
+                  \par\subtitledefault%
+            }%
+        }
+      \vskip 2em%
+      \hrule%
+    \ifdefempty{\@author}{}{
+        \vskip 2em %
+        {\LARGE\bfseries\sffamily%
+              \centering%
+              \par{\@author}%
+        }%
+        \vskip 1em %
+    }%
+%
+    \vfill
+    \ifdefempty{\logodefault}{}{
+        \vskip 2em %
+        \includegraphics[width=0.5\textwidth]{\logodefault}
+        \vskip 1em %
+    }
+    \vfill
+%
+    \ifdefempty{\unidefault}{}{
+        \vskip 1em %
+        {\Large\bfseries\sffamily%
+              \centering%
+              \par\MakeUppercase{\unidefault}%
+        }%
+    }
+    \ifdefempty{\teacherdefault}{}{
+        \vskip 1em %
+        {\large\bfseries\sffamily%
+              \centering%
+              \par\MakeUppercase{
+                \IfLanguageName{french}%
+                  {Enseignant: }%
+                  {Teacher: }%
+                \teacherdefault%
+              }%
+        }%
+    }%
+    \ifdefempty{\subjectdefault}{%
+      \ifdefempty{\subjectiddefault}{}{%
+        \vskip 1em\par%
+    }}{\vskip 1em\par}%
+    \ifdefempty{\subjectiddefault}{}{%
+        {\large\bfseries\sffamily%
+              \centering%
+              \MakeUppercase{\subjectiddefault}%
+        }%
+    }%
+    \ifdefempty{\subjectdefault}{}{%
+      \ifdefempty{\subjectiddefault}{}{\large\bfseries\sffamily: }%
+      }%
+    \ifdefempty{\subjectdefault}{}{%
+        {\large\bfseries\sffamily%
+              \centering%
+              \MakeUppercase{\subjectdefault}%
+        }%
+    }%
+    \ifdefempty{\@date}{}{%
+        \vskip 2em %
+        {\Large\bfseries\sffamily%
+              \centering%
+              \par\MakeUppercase{\@date}%
+        }%
+    }%
+  \end{center}%
+  \par
+  \vskip 1.5em}
+\setcounter{page}{0}
+\makeatother

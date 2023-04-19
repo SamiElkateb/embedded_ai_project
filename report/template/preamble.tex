@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% IMPORTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,onesize,a4paper,titlepage]{report}
+
+%%%%%%%%%%%%%%% Formatting %%%%%%%%%%%%%%% 
+\usepackage{csquotes}
+\usepackage[french,english]{babel}
+\usepackage{iflang}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{subfiles}
+
+%%%%%%%%%%%%%%% DateTime %%%%%%%%%%%%%%% 
+\usepackage[fr-FR]{datetime2}
+
+%%%%%%%%%%%%%%% Graphics %%%%%%%%%%%%%%% 
+\usepackage{graphicx} % Images
+\graphicspath{ {./images/} }
+
+%%%%%%%%%%%%%%% Miscelanous %%%%%%%%%%%%%%% 
+\usepackage{lipsum} % Lorem Ipsum
+\usepackage[hidelinks]{hyperref} % For Hyperlinks
+\usepackage{etoolbox}
+
+%%%%%%%%%%%%%%% Colors %%%%%%%%%%%%%%% 
+% \definecolor{primary}{HTML}{353f4f} % Color of the side column
+% \definecolor{text}{HTML}{242A34}
+% \definecolor{linkColor}{HTML}{2a61bb}
+
+%%%%%%%%%%%%%%% Code %%%%%%%%%%%%%%% 
+\usepackage{minted}
+
+%%%%%%%%%%%%%%% Table of Content %%%%%%%%%%%%%%% 
+
+%%%%%%%%%%%%%%% Bibliography %%%%%%%%%%%%%%% 
+\usepackage{biblatex}
+
+\usepackage{ifthen}
+
+\input{template/title-page.tex}
+
+%%%%%%%%%%%%%%% Chapter Title %%%%%%%%%%%%%%% 
+\usepackage{titlesec}
+\usepackage{color}
+\definecolor{gray75}{gray}{0.75}
+\titleformat{\chapter}[hang]{\huge\bfseries}{\thechapter\hspace{10pt}\textcolor{gray75}{|}\hspace{10pt}}{0pt}{\huge\bfseries}

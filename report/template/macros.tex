@@ -1,0 +1,8 @@
+%%%%%%%%%%%%%%% DateTime %%%%%%%%%%%%%%% 
+\makeatletter
+\newcommand{\monthyeardate}{%
+  \IfLanguageName{french}
+    {\DTMfrenchmonthname{\@dtm@month} \@dtm@year}
+    {\DTMenglishmonthname{\@dtm@month} \@dtm@year}%
+}
+\makeatother

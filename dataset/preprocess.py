@@ -5,13 +5,14 @@ from preprocessing import *
 from shutil import rmtree
 import logging
 FORMAT = "%(message)s"
+logging.basicConfig(level = logging.INFO, format=FORMAT)
 
 def __make_archive(output_filename, source_dir):
     with tarfile.open(output_filename, "w:gz") as tar:
         tar.add(source_dir, arcname='.')
 
-def __reset_testing_list():
-    relative_path = f"{DEST_DIR}/testing_list.txt"
+def __reset_file(filename: str):
+    relative_path = f"{DEST_DIR}/${filename}"
     absolute_path = path.dirname(__file__)
     testing_file_path = path.join(absolute_path, relative_path)
     makedirs(path.dirname(testing_file_path), exist_ok=True)
@@ -30,11 +31,11 @@ def clean():
     nb_files = len(filepaths)
     logging.info(f"added {nb_files} sound files to be cleaned" )
     for i, filepath in enumerate(filepaths):
-        resampled_path = add_tmp_dir(filepath, RESAMPLED_DIR)
+        resampled_path = add_tmp_dir(filepath, RESAMPLED_DIR).replace(".mp3", ".wav")
         nosilence_path = add_tmp_dir(filepath, NOSILENCE_DIR)
         convert(filepath, resampled_path)
         remove_silence(resampled_path, nosilence_path, 3)
-        if i == int(nb_files/10):
+        if i % int(nb_files/10) == 0:
             logging.info(f"cleaned {i}/{nb_files} files" )
 
 # cuts the sounds in 1 second files
@@ -58,11 +59,12 @@ def cut():
     if path.exists(absolute_dest_dir_path):
         rmtree(absolute_dest_dir_path)
 
-    __reset_testing_list()
+    __reset_file("testing_list.txt")
+    __reset_file("datafile.txt")
     for i, populated_path in enumerate(populated_paths):
-        split_sound(populated_path, absolute_dest_dir_path) 
-        if i == int(nb_files/10):
-            logging.info(f"cleaned {i}/{nb_files} files" )
+        split_sound(populated_path, absolute_dest_dir_path, "datafile.txt") 
+        if i % int(nb_files/10) == 0:
+            logging.info(f"cut {i}/{nb_files} files" )
     
 # archives the destination folder
 def archive():
@@ -79,7 +81,7 @@ def __main(arg):
         archive()
 
 if __name__ == '__main__':
-    if len(sys.argv[1:]) != 2:
+    if len(sys.argv[1:]) != 1 and ("clean" in sys.argv[1] or "cut" in sys.argv[1] or "archive" in sys.argv[1]):
         sys.stderr.write(
             'Usage: preprocess.py <clean | cut | archive>\n')
         sys.exit(1)

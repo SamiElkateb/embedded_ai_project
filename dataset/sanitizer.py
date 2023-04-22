@@ -5,29 +5,16 @@ from shutil import copyfile, rmtree
 from os import walk, path, makedirs, stat, remove
 from random import shuffle, choice
 import numpy as np
-import hashlib
 import tarfile
+import preprocessing
 import math
 from pathlib import Path
-
-DEST_DIR="dataset.v2"
-TMP_DIR="dataset.tmp.v2"
 
 def convert_mp3_wav(src: str):
     dst = src.replace(".mp3", ".wav")
     if path.exists(dst): return
     sound = AudioSegment.from_mp3(src)
     sound.export(dst, format="wav")
-
-def sha256sum(filename):
-    h = hashlib.sha256()
-    with open(filename, 'rb', buffering=0) as file:
-        while True:
-            chunk = file.read(h.block_size)
-            if not chunk:
-                break
-            h.update(chunk)
-    return h.hexdigest()[0:6]
 
 def get_sound_lengths(sound_files: list[str]) -> np.ndarray:
     SOUND_LIB = MP3 if sound_files[0].endswith("mp3") else WAVE
@@ -69,8 +56,6 @@ def get_min_total_size(sound_files_paths: list[str]):
     for classname in classes:
         if totals[classname] < min:
             min = totals[classname]
-    print("result", totals)
-    print("min", min)
     return min
 
 
@@ -96,7 +81,7 @@ def populate_dest_data(sound_file_paths: list[str]):
     result_array = []
     for sound_file_path in sound_file_paths:
         _, extension = path.splitext(sound_file_path)
-        filename = sha256sum(sound_file_path) + extension
+        filename = preprocessing.file_shasum(sound_file_path) + extension
         filepath = Path(sound_file_path)
         dirname = filepath.parent.name
         result_array.append({
@@ -164,9 +149,39 @@ def split_sound(sound_data):
             if choice([True, False, False]):
                 file.write(f'{dest_dirname}/{dest_filename}_{i}{extension}\n')
 
+def add_tmp_dir(filepath_str: str, tmp_dir: str):
+    filepath = Path(filepath_str)
+    filename = filepath.name
+    classname = filepath.parent.name
+    relative_path = f"{tmp_dir}/{classname}/{filename}"
+    absolute_path = path.dirname(__file__)
+    full_path = path.join(absolute_path, relative_path)
+    makedirs(path.dirname(full_path), exist_ok=True)
+    return full_path
+
+
+
 
 if __name__ == '__main__':
+    filepaths = []
+    curr_path = path.dirname(__file__)
+    for (dirpath, dirnames, filenames) in walk(curr_path):
+        if DEST_DIR in dirpath: continue
+        if NOSILENCE_DIR in dirpath: continue
+        if RESAMPLED_DIR in dirpath: continue
+        filepaths.extend(path.join(dirpath, filename) for filename in filenames if filename.endswith(".wav"))
+    min_total_size = int(get_min_total_size(filepaths))
+    shuffle(filepaths)
+    clamped_data = clamp_data_size(filepaths, min_total_size)
+    for filepath in filepaths:
+        resampled_path = add_tmp_dir(filepath, RESAMPLED_DIR)
+        nosilence_path = add_tmp_dir(filepath, NOSILENCE_DIR)
+        preprocessing.convert(filepath, resampled_path)
+        preprocessing.remove_silence(resampled_path, nosilence_path, 3)
+        break
 
+
+    exit()
     curr_path = path.dirname(__file__)
     filepaths_mp3 = []
     for (dirpath, dirnames, filenames) in walk(curr_path):

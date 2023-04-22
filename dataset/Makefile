@@ -12,3 +12,6 @@ checksum:
 
 remove_silence:
 	python3 ./modules/silence_remover.py 3 $(TEST_FILE_NAME)$(TEST_FILE_EXTENSION) 
+
+preprocess:
+	python3 preprocess.py

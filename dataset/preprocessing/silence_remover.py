@@ -5,7 +5,7 @@ import wave
 import webrtcvad
 from os import path
 from pydub import AudioSegment
-import rate_converter
+import preprocessing
 
 # Source: https://ngbala6.medium.com/audio-processing-and-remove-silence-using-python-a7fe1552007a
 
@@ -16,7 +16,7 @@ def __read_wave(path):
         sample_width = wf.getsampwidth()
         assert sample_width == 2
         sample_rate = wf.getframerate()
-        print("sample_rate", sample_rate)
+        # print("sample_rate", sample_rate)
         assert sample_rate in (8000, 16000, 32000, 48000)
         pcm_data = wf.readframes(wf.getnframes())
         return pcm_data, sample_rate
@@ -61,7 +61,7 @@ def __vad_collector(sample_rate, frame_duration_ms,
     for frame in frames:
         is_speech = vad.is_speech(frame.bytes, sample_rate)
 
-        sys.stdout.write('1' if is_speech else '0')
+        # sys.stdout.write('1' if is_speech else '0')
         if not triggered:
             ring_buffer.append((frame, is_speech))
             num_voiced = len([f for f, speech in ring_buffer if speech])
@@ -70,7 +70,7 @@ def __vad_collector(sample_rate, frame_duration_ms,
             # TRIGGERED state.
             if num_voiced > 0.9 * ring_buffer.maxlen:
                 triggered = True
-                sys.stdout.write('+(%s)' % (ring_buffer[0][0].timestamp,))
+                # sys.stdout.write('+(%s)' % (ring_buffer[0][0].timestamp,))
                 # We want to yield all the audio we see from now until
                 # we are NOTTRIGGERED, but we have to start with the
                 # audio that's already in the ring buffer.
@@ -87,14 +87,14 @@ def __vad_collector(sample_rate, frame_duration_ms,
             # unvoiced, then enter NOTTRIGGERED and yield whatever
             # audio we've collected.
             if num_unvoiced > 0.9 * ring_buffer.maxlen:
-                sys.stdout.write('-(%s)' % (frame.timestamp + frame.duration))
+                # sys.stdout.write('-(%s)' % (frame.timestamp + frame.duration))
                 triggered = False
                 yield b''.join([f.bytes for f in voiced_frames])
                 ring_buffer.clear()
                 voiced_frames = []
-    if triggered:
-        sys.stdout.write('-(%s)' % (frame.timestamp + frame.duration))
-    sys.stdout.write('\n')
+    # if triggered:
+    #     sys.stdout.write('-(%s)' % (frame.timestamp + frame.duration))
+    # sys.stdout.write('\n')
     # If we have any leftover voiced audio when we run out of input,
     # yield it.
     if voiced_frames:
@@ -117,7 +117,7 @@ def __main(args):
         # relative_path = args[1]
         # full_path = path.join(absolute_path, relative_path)
         src = args[1]
-        rate_converter.convert(src, src.replace(".mp3", ".wav"))
+        preprocessing.convert(src, src.replace(".mp3", ".wav"))
         args[1] = src.replace(".mp3", ".wav")
 
     if len(args) != 2:

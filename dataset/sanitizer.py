@@ -10,6 +10,10 @@ import preprocessing
 import math
 from pathlib import Path
 
+DEST_DIR="dataset_v2"
+NOSILENCE_DIR="no_silence_v2"
+RESAMPLED_DIR="resampled_v2"
+
 def convert_mp3_wav(src: str):
     dst = src.replace(".mp3", ".wav")
     if path.exists(dst): return

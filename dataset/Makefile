@@ -1,17 +1,15 @@
 TEST_FILE_NAME=test
 TEST_FILE_EXTENSION=.mp3
 
-sanitize:
-	python3 sanitizer.py
-
 scrappe:
 	python3 scrapper.py
 
-checksum:
-	md5 final_dataset.tar.gz
+clean:
+	python3 preprocess.py clean
 
-remove_silence:
-	python3 ./modules/silence_remover.py 3 $(TEST_FILE_NAME)$(TEST_FILE_EXTENSION) 
+cut:
+	python3 preprocess.py cut
 
-preprocess:
-	python3 preprocess.py
+
+archive:
+	python3 preprocess.py archive

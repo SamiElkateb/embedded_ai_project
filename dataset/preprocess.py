@@ -4,6 +4,7 @@ import tarfile
 from preprocessing import *
 from shutil import rmtree
 import logging
+from sklearn.model_selection import train_test_split
 FORMAT = "%(message)s"
 logging.basicConfig(level = logging.INFO, format=FORMAT)
 
@@ -12,7 +13,7 @@ def __make_archive(output_filename, source_dir):
         tar.add(source_dir, arcname='.')
 
 def __reset_file(filename: str):
-    relative_path = f"{DEST_DIR}/${filename}"
+    relative_path = f"{DEST_DIR}/{filename}"
     absolute_path = path.dirname(__file__)
     testing_file_path = path.join(absolute_path, relative_path)
     makedirs(path.dirname(testing_file_path), exist_ok=True)
@@ -32,7 +33,7 @@ def clean():
     logging.info(f"added {nb_files} sound files to be cleaned" )
     for i, filepath in enumerate(filepaths):
         resampled_path = add_tmp_dir(filepath, RESAMPLED_DIR).replace(".mp3", ".wav")
-        nosilence_path = add_tmp_dir(filepath, NOSILENCE_DIR)
+        nosilence_path = add_tmp_dir(filepath, NOSILENCE_DIR).replace(".mp3", ".wav")
         convert(filepath, resampled_path)
         remove_silence(resampled_path, nosilence_path, 3)
         if i % int(nb_files/10) == 0:
@@ -72,6 +73,18 @@ def archive():
     __make_archive(f"{DEST_DIR}.tar.gz", DEST_DIR)
     logging.info(f"creat archive from {DEST_DIR}.tar.gz")
 
+# creates the test file for the dataset
+def create_test_file():
+    datafile_path = f"{DEST_DIR}/datafile.txt"
+    testfile_path = f"{DEST_DIR}/testfile.txt"
+    x_test_datas = [] 
+    with open(datafile_path, "rb") as f:
+       data = f.read().split('\n')
+       _, x_test_datas = train_test_split(data, test_size=0.3) 
+    with open(testfile_path, "a+") as f:
+        for x_test_data in x_test_datas:
+           f.write(x_test_data)
+
 def __main(arg):
     if arg == 'clean':
         clean()
@@ -79,9 +92,16 @@ def __main(arg):
         cut()
     if arg == 'archive':
         archive()
+    if arg == 'testfile':
+        create_test_file()
 
 if __name__ == '__main__':
-    if len(sys.argv[1:]) != 1 and ("clean" in sys.argv[1] or "cut" in sys.argv[1] or "archive" in sys.argv[1]):
+    arg = sys.argv[1]
+    if "clean" in arg or "cut" in arg or "archive" in arg or "testfile" in arg:
+        sys.stderr.write(
+            'Usage: preprocess.py <clean | cut | archive>\n')
+        sys.exit(1)
+    if len(sys.argv[1:]) != 1:
         sys.stderr.write(
             'Usage: preprocess.py <clean | cut | archive>\n')
         sys.exit(1)

@@ -10,6 +10,8 @@ clean:
 cut:
 	python3 preprocess.py cut
 
+create_testfile:
+	python3 preprocess.py testfile
 
 archive:
 	python3 preprocess.py archive

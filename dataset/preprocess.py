@@ -76,14 +76,17 @@ def archive():
 # creates the test file for the dataset
 def create_test_file():
     datafile_path = f"{DEST_DIR}/datafile.txt"
-    testfile_path = f"{DEST_DIR}/testfile.txt"
+    testfile_path = f"{DEST_DIR}/testing_list.txt"
+    __reset_file("testing_list.txt")
     x_test_datas = [] 
     with open(datafile_path, "rb") as f:
-       data = f.read().split('\n')
+       data = []
+       for line in f:
+          data.append(line.strip().decode('utf-8'))
        _, x_test_datas = train_test_split(data, test_size=0.3) 
     with open(testfile_path, "a+") as f:
         for x_test_data in x_test_datas:
-           f.write(x_test_data)
+           f.write(x_test_data + '\n')
 
 def __main(arg):
     if arg == 'clean':
@@ -97,9 +100,9 @@ def __main(arg):
 
 if __name__ == '__main__':
     arg = sys.argv[1]
-    if "clean" in arg or "cut" in arg or "archive" in arg or "testfile" in arg:
+    if not ("clean" in arg or "cut" in arg or "archive" in arg or "testfile" in arg):
         sys.stderr.write(
-            'Usage: preprocess.py <clean | cut | archive>\n')
+            'Usage: preprocess.py <clean | cut | archive | testfile>\n')
         sys.exit(1)
     if len(sys.argv[1:]) != 1:
         sys.stderr.write(

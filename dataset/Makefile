@@ -10,7 +10,7 @@ clean:
 cut:
 	python3 preprocess.py cut
 
-create_testfile:
+testfile:
 	python3 preprocess.py testfile
 
 archive:

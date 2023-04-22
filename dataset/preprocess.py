@@ -3,6 +3,8 @@ import sys
 import tarfile
 from preprocessing import *
 from shutil import rmtree
+import logging
+FORMAT = "%(message)s"
 
 def __make_archive(output_filename, source_dir):
     with tarfile.open(output_filename, "w:gz") as tar:
@@ -25,11 +27,15 @@ def clean():
         if NOSILENCE_DIR in dirpath: continue
         if RESAMPLED_DIR in dirpath: continue
         filepaths.extend(path.join(dirpath, filename) for filename in filenames if filename.endswith(".wav") or filename.endswith(".mp3"))
-    for filepath in filepaths:
+    nb_files = len(filepaths)
+    logging.info(f"added {nb_files} sound files to be cleaned" )
+    for i, filepath in enumerate(filepaths):
         resampled_path = add_tmp_dir(filepath, RESAMPLED_DIR)
         nosilence_path = add_tmp_dir(filepath, NOSILENCE_DIR)
         convert(filepath, resampled_path)
         remove_silence(resampled_path, nosilence_path, 3)
+        if i == int(nb_files/10):
+            logging.info(f"cleaned {i}/{nb_files} files" )
 
 # cuts the sounds in 1 second files
 def cut():
@@ -38,8 +44,13 @@ def cut():
     for (dirpath, _, filenames) in walk(curr_path):
         if not NOSILENCE_DIR in dirpath: continue
         filepaths.extend(path.join(dirpath, filename) for filename in filenames if filename.endswith(".wav"))
+    nb_files = len(filepaths)
+    logging.info(f"added {nb_files} sound total files" )
     filepaths = ceil_by_min_size(filepaths)
+    logging.info(f"kept {nb_files} sound files" )
     populated_paths = populate_dest_data(filepaths)
+    nb_files = len(populated_paths)
+    logging.info(f"populated {nb_files} sound files" )
 
     relative_path = f"{DEST_DIR}/"
     absolute_path = path.dirname(__file__)
@@ -48,12 +59,16 @@ def cut():
         rmtree(absolute_dest_dir_path)
 
     __reset_testing_list()
-    for populated_path in populated_paths:
+    for i, populated_path in enumerate(populated_paths):
         split_sound(populated_path, absolute_dest_dir_path) 
+        if i == int(nb_files/10):
+            logging.info(f"cleaned {i}/{nb_files} files" )
     
 # archives the destination folder
 def archive():
+    logging.info(f"creating archive from {DEST_DIR}")
     __make_archive(f"{DEST_DIR}.tar.gz", DEST_DIR)
+    logging.info(f"creat archive from {DEST_DIR}.tar.gz")
 
 def __main(arg):
     if arg == 'clean':

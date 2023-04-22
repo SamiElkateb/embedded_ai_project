@@ -1,0 +1,4 @@
+webrtcvad
+pydub
+mutagen
+numpy

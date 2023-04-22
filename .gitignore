@@ -3,3 +3,5 @@ _minted-main
 .DS_Store
 *.wav
 *.mp3
+*.zip
+*.tar.gz

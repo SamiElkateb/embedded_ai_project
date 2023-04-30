@@ -1,0 +1,20 @@
+@startuml
+(*) --> "Creation du dataset"
+--> "test du model M5"
+if "résultats satisfaisant? (>80%)" then
+  -->[oui] "réduction du réseau"
+else 
+  -->[non] "amélioration du dataset"
+  -> "test du model M5"
+
+"réduction du réseau" --> "téléversement sur la carte"
+if "succes du téléversement" then
+  -->[oui] "amélioration des performances"
+else 
+  ->[non] "réduction du réseau"
+
+"amélioration des performances" if "amélioration significative" then
+  ->[oui] "téléversement sur la carte"
+else 
+  -->[non] (*)
+@enduml

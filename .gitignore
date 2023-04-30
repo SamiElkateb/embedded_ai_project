@@ -5,3 +5,4 @@ _minted-main
 *.mp3
 *.zip
 *.tar.gz
+!*acc.zip

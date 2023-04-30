@@ -1,6 +1,3 @@
-TEST_FILE_NAME=test
-TEST_FILE_EXTENSION=.mp3
-
 scrappe:
 	python3 scrapper.py
 
@@ -15,3 +12,6 @@ testfile:
 
 archive:
 	python3 preprocess.py archive
+
+checksum:
+	md5 dataset_v2.tar.gz

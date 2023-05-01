@@ -12,7 +12,7 @@ d'obtenir des résultats corrects.
 Pour cela, nous nous sommes fixé pour objectif d'obtenir une précision supérieure à 80\% sur les données de test
 avec un réseau de neurone de type M5 \cite{M5}.
 Cela nous permet entre autre de valider notre jeu de données. 
-Nous avons donc suivi une approche itérative \ref{graph:iterative_workflow}
+Nous avons donc suivi une approche itérative Figure \ref{graph:iterative_workflow}
 
 \begin{figure}[!ht]
   \includegraphics[width=0.5\textwidth]{iterative_workflow}
@@ -31,7 +31,7 @@ un délai de 1 seconde entre chaque téléchargement pour ne pas surcharger le s
 de conversion des fichiers en wav et de resampling en 16 000 Hz. Les scripts utilisés sont disponibles sur
 notre \href{https://github.com/SamiElkateb/embedded_ai_project}{repository GitHub} \cite{Repository}.
 
-Cette approche ne nous a malheureusement pas permit d'obtenir des résultats satisfaisants. En effet, 
+Cette approche ne nous a malheureusement pas permis d'obtenir des résultats satisfaisants. En effet, 
 le réseau de neurone M5 ne nous permettait d'obtenir qu'une précision de 20\%.
 
 Nous avons donc choisis de découper les sons de notre jeu de données en échantillons de 1 seconde.

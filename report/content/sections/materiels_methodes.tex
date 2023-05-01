@@ -4,7 +4,7 @@
 
 Pour réaliser le jeu de données nécessaire à l'entrainement de notre réseau de neurone,
 nous avons utilisé le site Xeno-Canto \cite{XenoCanto}. Celui-ci recense un grand nombre de chants d'oiseau
-de différentes espèces enregistré par des utilisateurs.
+de différentes espèces enregistrés par des utilisateurs.
 Cependant, les chants d'oiseaux enregistrés possèdent des caractéristiques différentes (durée d'enregistrement,
 format d'enregistrement, sample rate, bruit de fond).
 Notre premier défi a donc été de créer un jeu de données permettant 
@@ -21,11 +21,11 @@ Nous avons donc suivi une approche itérative \ref{graph:iterative_workflow}
   \label{graph:iterative_workflow}
 \end{figure}
 
-À chaque itération, nous essayer d'obtenir une meilleure précision qu'à l'itération précédente.
+À chaque itération, nous avons essayé d'obtenir une meilleure précision qu'à l'itération précédente.
 Notre première approche a consisté à récupérer le son de 10 espèces d'oiseaux depuis Xeno-Canto puis
 à les convertir en .wav avant de tester le réseau de neurone M5 dessus.
 
-Pour ce faire nous avons développé en script de scrapping en Python nous permettant de sélectionner les espèces 
+Pour ce faire nous avons développé en script de récupération de données (scrapping) en Python nous permettant de sélectionner les espèces 
 que nous voulions télécharger depuis le site. Lors de la récupération des sons, nous avons choisi de laisser 
 un délai de 1 seconde entre chaque téléchargement pour ne pas surcharger le site. Nous avons également utilisé un script 
 de conversion des fichiers en wav et de resampling en 16 000 Hz. Les scripts utilisés sont disponibles sur
@@ -35,9 +35,10 @@ Cette approche ne nous a malheuresement pas permit d'obtenir des résultats sati
 le réseau de neurone M5 ne nous permettait d'obtenir qu'une précision de 20\%.
 
 Nous avons donc choisis de découper les sons de notre jeu de données en échantillons de 1 seconde.
-Ce traitement de notre jeu de données nous a permi d'obtenir une amélioration de la précision 
-du réseau de neurone M5 sur notre dataset qui est passée de 20\% à 40\%. Cependant, nous pouvons 
-trouver plusieurs défaut à cette approche. La principale est que sur les enregistrement de plusieurs minutes,
+Ce traitement nous a permis d'obtenir une amélioration de 20\% de la précision 
+du réseau de neurone M5 qui est passée de 20\% à 40\%. 
+
+Cependant, nous pouvons trouver plusieurs défauts à cette approche. La principale est que sur les enregistrements de plusieurs minutes,
 les chants d'oiseau ne sont pas constant et il existe des périodes de silence. 
 Nous en déduisons qu'une des raisons de la mauvaise performance de notre réseau de neurone 
 et que certains échantillons ne contiennent pas de chants d'oiseaux. 
@@ -49,7 +50,11 @@ Nous avons réflechis à plusieurs façon de résoudre ce problème :
   \item Entrainer un algorithme non supervisé pour permettre de détecter les échantillons potentiellement mal labélisés
 \end{itemize}
 
-
+Pour des raisons de temps et d'éfficacité, nous avons choisit la seconde approche. Pour cela, nous avons
+utilisé le script "Silence Remove" proposé dans l'article Audio Processing and Remove Silence using Python \cite{DataCleaning}
+ 
+Cette approche nous a finalement permis d'obtenir un taux de précision adéquat avec une précision de 82\% sur les données de tests.
+Nous avons donc finalement utilisé le flux de travail Figure \ref{graph:final_workflow}.
 
 
 

@@ -1,36 +1,37 @@
 \chapter{Résultats}
 
 
-\paragraph{Resultats théoriques: }
-Suite à l'apprentissage du réseau de neurone, nous avons obtenu une précision de 58\% sur les données de tests 
+\paragraph{Performance théorique:} Suite à l'apprentissage du réseau de neurone, nous avons obtenu une précision de 59.0\% sur les données d'entrainement,
+de 58.9\% sur les données de tests avant quantization et 58\% après.
+La matrice de confusion nous permet de voir les chants ont été globalement 
+bien appris avec une majorité de vrais positifs pour la plupart des classes cf: Figure \ref{graph:confusion_matrix1}.
+Les classes présentant le plus de confusion sont les classes 0, 3, 4 et 5 avec un maximum de confusion pour la classe 3.
+Ces classes représentent les oiseaux suivants :
+
+\begin{itemize}
+  \item 0: Alauda Arvensis
+  \item 3: Emberiza Cirlus
+  \item 4: Emberiza Citrinella
+  \item 5: Falco Tinnunculus
+\end{itemize}
 
 \begin{figure}[!ht]
   \includegraphics[width=0.5\textwidth]{confusion_matrix1}
   \centering
-  \caption{Workflow Iteratif}
+  \caption{Matrice de confusion}
   \label{graph:confusion_matrix1}
 \end{figure}
 
-
-\begin{figure}[!ht]
-  \includegraphics[width=0.5\textwidth]{confusion_matrix2}
-  \centering
-  \caption{Workflow Iteratif}
-  \label{graph:confusion_matrix2}
-\end{figure}
-
-
-\paragraph{Résultats expérimentaux: } Pour tester nos résultats nous avons déployé le réseau de neurone sur la carte Nucleo à l'aide 
+\paragraph{Performance expérimentale:} Pour tester nos résultats nous avons déployé le réseau de neurone sur la carte Nucleo à l'aide 
 de l'IDE Arduino. Pour cela nous avons utilisé le même projet Arduino que dans le Lab 5, lors de la réalisation du CNN à partir du
-jeu de donnée Google Speech Commons.
+jeu de donnée Google Speech Commons. Nous avons modifié le programme pour qu'il n'écrive dans la sortie Serial que lorsque la valeur prédite maximum
+est supérieure à 8000. Cela permet le n'afficher que les résultats ou ceux-ci sont plus en faveur d'une classe que d'une autre.
+Nous avons ensuite testé de modèle en jouant sur haut-parleurs des sons n'étant pas présents dans notre jeu de données.
 
+Nous avons pu remarquer que lorsque qu'un chant d'oiseau est joué et qu'un résultat est donné, celui-ci est le bon dans la majorité des cas.
+Cependant, nous recevons parfois des résultats en présence de bruits forts, alors qu'aucun bruit d'oiseau n'est joué. 
+Cela peut être dû à la présence dans notre jeu de données d'échantillons de bruits de fond, où aucun oiseau ne peut être entendu.
 
-
-• Presentation of the results obtained, and the experimental setup to test the generalization of
-the training to real data (not the ones of the dataset).
-
-
-\paragraph{Performance}
 \paragraph{Mémoire}
 \paragraph{Latence}
 \paragraph{Energie}

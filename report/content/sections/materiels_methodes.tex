@@ -137,12 +137,18 @@ Ceci a permis de ne pas dépasser la RAM disponible sur la carte et de réduire 
 \section{Architecture du traitement de données par le capteur}
 Le microcontroller sur lequel nous avons déployé notre CCN est un STM32 NUCLEO-L476RG.
 Celui-ci est équipé d'une carte d'acquisition audio personnalisée 
-contenant un convertisseur analogique-numérique TLV320ADC3101 et un microphone AOM-5024L-HD-R.
+contenant un convertisseur analogique-numérique TLV320ADC3101, un 
+microphone AOM-5024L-HD-R ainsi qu'une prise d'entrée stéréo de 3,5.
+
+Le microphone utilisé est analogique et nécessite donc l'utilisation d'un ADC.
+
+\paragraph{Les ADC} (Analogue-to-Digital Converter) permettent de convertir un signal analogique (signal continu) en signal digital (signal discret)
+qui peut ensuite être lu et traité par un microcontroller \cite{ADC}. Dans notre cas l'ADC permet d'obtenir un signal numérique à partir du signal anologique
+fourni par le microphone.
+
+Sur la carte Nucleo, l'ADC est connecté via la communication serial I2S. Les données numériques récupérée depuis l'ADC sont ensuite stockées automatiquement par le DMA.
 
 \paragraph{Le DMA} (Direct Memory Access) est une méthode de transfert de données où les périphériques accèdent directement à la mémoire sans passer par le CPU.
 Le CPU n'est alors responsable que de l'initiation du transfert de données et reçoit une interruption lorsque le transfert est terminé.
 Cela permet aux périphériques d'I/O d'accéder à la mémoire, sans monopoliser le CPU. \cite{DMA}
 
-\paragraph{Les ADC} (Analogue-to-Digital Converter) permettent de convertir un signal analogique (signal continu) en signal digital (signal discret)
-qui peut ensuite être lu et traité par un microcontroller. \cite{ADC} Dans notre cas l'ADC permet d'obtenir un signal numérique à partir du signal anologique
-fourni par le microphone.

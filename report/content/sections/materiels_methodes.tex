@@ -54,13 +54,16 @@ Nous avons réflechis à plusieurs façon de résoudre ce problème :
 Pour des raisons de temps et d'éfficacité, nous avons choisit la seconde approche. Pour cela, nous avons
 utilisé le script "Silence Remove" proposé dans l'article Audio Processing and Remove Silence using Python \cite{DataCleaning}
  
-Cette approche nous a finalement permis d'obtenir un taux de précision adéquat avec une précision de 82\% sur les données de tests.
-Nous avons donc finalement utilisé le flux de travail Figure \ref{graph:final_workflow}.
+Cette approche nous a finalement permis d'obtenir un taux de précision adéquat de 82\% sur les données de tests.
+Nous avons donc choisit d'utilisé cette solution pour la création de notre jeu de données.
 
-
+Par la suite, il a été nécessaire de réduire la taille du réseau de neurone ainsi que la quantité de données le traversant.
+Nous avons donc réduit le réseau de neurone M5 de manière itérative, en essayant de garder une précision aussi élevée que possible.
+Ceci a permis de téléverser sur la carte STM32 pour tester notre modèle.
+Ce qui finalise notre flux  de travail Figure \ref{graph:final_workflow}.
 
 \begin{figure}[!ht]
-  \includegraphics[width=0.3\textwidth]{final_workflow}
+  \includegraphics[width=0.4\textwidth]{final_workflow}
   \centering
   \caption{Workflow Final}
   \label{graph:final_workflow}
@@ -93,6 +96,15 @@ répartis de manière équitable sur 10 classes.
 \end{center}
 
 \section{Description du CNN}
+
+Pour pouvoir déployer le CNN sur la carte STM32 NUCLEO-L476RG, il a été nécessaire 
+de minimiser les ressources utilisées par notre réseau de neurone. Pour cela les paramètres à prendre en compte sont
+la taille et la quantité de données utilisée par le réseau (RAM et ROM) ainsi que le nombre 
+de paramètres du réseau (temps de calcul).
+
+Pour réduire la taille et le nombre de paramètre de paramètres de notre réseau, nous avons diminué le nombre de filtres de nos
+Conv1D. Nous avons ensuite utilisé un MaxPool en entrée du réseau pour réduire la quantité de données initiales. 
+Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire le nombre de paramètres à 12 234.
 
 \begin{center}
   \begin{tabular}{ |c|}

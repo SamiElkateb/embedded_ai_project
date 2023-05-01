@@ -104,7 +104,7 @@ de minimiser les ressources utilisées par notre réseau de neurone. Pour cela l
 la taille et la quantité de données utilisée par le réseau (RAM et ROM) ainsi que le nombre 
 de paramètres du réseau (temps de calcul).
 
-Pour réduire la taille et le nombre de paramètres de paramètres de notre réseau, nous avons diminué le nombre de filtres de nos
+Pour réduire la taille et le nombre de paramètres de notre réseau, nous avons diminué le nombre de filtres de nos
 Conv1D. Nous avons ensuite utilisé un MaxPool en entrée du réseau pour réduire la quantité de données initiales. 
 Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire le nombre de paramètres à 12 234.
 
@@ -136,8 +136,12 @@ Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire l
 
 \section{Architecture du traitement de données par le capteur}
 
-\paragraph{DMA }
-\paragraph{ADC }
 
-• Presentation of the processing architecture of the sensor's data
-o Provide a definition of DMA and ADC
+
+\paragraph{Le DMA} (Direct Memory Access) est une méthode de transfert de données où les périphériques accèdent directement à la mémoire sans passer par le CPU.
+Le CPU n'est alors responsable que de l'initiation du transfert de données et reçoit une interruption lorsque le transfert est terminé.
+Cela permet aux périphériques d'I/O d'accéder à la mémoire, sans monopoliser le CPU. \cite{DMA}
+
+\paragraph{Les ADC} (Analogue-to-Digital Converter) permettent de convertir un signal analogique (signal continu) en signal digital (signal discret)
+qui peut ensuite être lu et traité par un microcontroller. \cite{ADC} Dans notre cas l'ADC permet d'obtenir un signal numérique à partir du signal anologique
+fourni par le microphone.

@@ -106,7 +106,7 @@ de paramètres du réseau (temps de calcul).
 
 Pour réduire la taille et le nombre de paramètres de notre réseau, nous avons diminué le nombre de filtres de nos
 Conv1D. Nous avons ensuite utilisé un MaxPool en entrée du réseau pour réduire la quantité de données initiales. 
-Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire le nombre de paramètres à 12 234.
+Ceci a permis de ne pas dépasser la RAM disponible sur la carte et de réduire le nombre de paramètres à 12 234.
 
 \begin{center}
   \begin{tabular}{ |c|}
@@ -135,8 +135,9 @@ Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire l
 \end{center}
 
 \section{Architecture du traitement de données par le capteur}
-
-
+Le microcontroller sur lequel nous avons déployé notre CCN est un STM32 NUCLEO-L476RG.
+Celui-ci est équipé d'une carte d'acquisition audio personnalisée 
+contenant un convertisseur analogique-numérique TLV320ADC3101 et un microphone AOM-5024L-HD-R.
 
 \paragraph{Le DMA} (Direct Memory Access) est une méthode de transfert de données où les périphériques accèdent directement à la mémoire sans passer par le CPU.
 Le CPU n'est alors responsable que de l'initiation du transfert de données et reçoit une interruption lorsque le transfert est terminé.

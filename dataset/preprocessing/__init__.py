@@ -6,3 +6,4 @@ from .ceil_by_size import ceil_by_min_size
 from .add_directory import add_tmp_dir
 from .populate_data import populate_dest_data
 from .sound_modification import split_sound
+from .noise_remover import remove_noise

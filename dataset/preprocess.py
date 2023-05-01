@@ -48,8 +48,8 @@ def cut():
         filepaths.extend(path.join(dirpath, filename) for filename in filenames if filename.endswith(".wav"))
     nb_files = len(filepaths)
     logging.info(f"added {nb_files} sound total files" )
-    filepaths = ceil_by_min_size(filepaths)
-    logging.info(f"kept {nb_files} sound files" )
+    # filepaths = ceil_by_min_size(filepaths)
+    # logging.info(f"kept {nb_files} sound files" )
     populated_paths = populate_dest_data(filepaths)
     nb_files = len(populated_paths)
     logging.info(f"populated {nb_files} sound files" )
@@ -67,6 +67,9 @@ def cut():
         if i % int(nb_files/10) == 0:
             logging.info(f"cut {i}/{nb_files} files" )
     
+def clean2():
+    remove_noise(DEST_DIR)
+
 # archives the destination folder
 def archive():
     logging.info(f"creating archive from {DEST_DIR}")
@@ -93,6 +96,8 @@ def __main(arg):
         clean()
     if arg == 'cut':
         cut()
+    if arg == 'clean2':
+        clean2()
     if arg == 'archive':
         archive()
     if arg == 'testfile':
@@ -100,7 +105,7 @@ def __main(arg):
 
 if __name__ == '__main__':
     arg = sys.argv[1]
-    if not ("clean" in arg or "cut" in arg or "archive" in arg or "testfile" in arg):
+    if not ("clean" in arg or "cut" in arg or "archive" in arg or "testfile" in arg or "clean2" in arg):
         sys.stderr.write(
             'Usage: preprocess.py <clean | cut | archive | testfile>\n')
         sys.exit(1)

@@ -7,6 +7,9 @@ clean:
 cut:
 	python3 preprocess.py cut
 
+clean2:
+	python3 preprocess.py clean2
+
 testfile:
 	python3 preprocess.py testfile
 

@@ -12,7 +12,7 @@ d'obtenir des résultats corrects.
 Pour cela, nous nous sommes fixé pour objectif d'obtenir une précision supérieure à 80\% sur les données de test
 avec un réseau de neurone de type M5 \cite{M5}.
 Cela nous permet entre autre de valider notre jeu de données. 
-Nous avons donc suivi une approche itérative Figure \ref{graph:iterative_workflow}
+Nous avons donc suivi une approche itérative cf: Figure \ref{graph:iterative_workflow}
 
 \begin{figure}[!ht]
   \includegraphics[width=0.5\textwidth]{iterative_workflow}
@@ -56,12 +56,12 @@ utilisé le script "Silence Remove" proposé dans l'article \emph{Audio Processi
 
  
 Cette approche nous a finalement permis d'obtenir un taux de précision adéquat de 82\% sur les données de tests.
-Nous avons donc choisi d'utilisé cette solution pour la création de notre jeu de données.
+Nous avons donc choisi d'utiliser cette solution pour la création de notre jeu de données.
 
 Par la suite, il a été nécessaire de réduire la taille du réseau de neurone ainsi que la quantité de données le traversant.
 Nous avons donc réduit le réseau de neurone M5 de manière itérative, en essayant de garder une précision aussi élevée que possible.
 Ceci a permis de téléverser sur la carte STM32 pour tester notre modèle.
-Ce qui finalise notre flux  de travail Figure \ref{graph:final_workflow}.
+Ce qui finalise notre flux de travail cf: Figure \ref{graph:final_workflow}.
 
 \begin{figure}[!ht]
   \includegraphics[width=0.4\textwidth]{final_workflow}

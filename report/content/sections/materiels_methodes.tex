@@ -1,4 +1,4 @@
-\chapter{Matériel et Méthodes}
+\chapter{Matériels et Méthodes}
 
 \section{Flux de travail}
 
@@ -29,9 +29,9 @@ Pour ce faire nous avons développé un script de récupération de données (sc
 que nous voulions télécharger depuis le site. Lors de la récupération des sons, nous avons choisi de laisser 
 un délai de 1 seconde entre chaque téléchargement pour ne pas surcharger le site. Nous avons également utilisé un script 
 de conversion des fichiers en wav et de resampling en 16 000 Hz. Les scripts utilisés sont disponibles sur
-notre repository GitHub  \cite{Repository}.
+notre \href{https://github.com/SamiElkateb/embedded_ai_project}{repository GitHub} \cite{Repository}.
 
-Cette approche ne nous a malheuresement pas permit d'obtenir des résultats satisfaisant. En effet, 
+Cette approche ne nous a malheureusement pas permit d'obtenir des résultats satisfaisants. En effet, 
 le réseau de neurone M5 ne nous permettait d'obtenir qu'une précision de 20\%.
 
 Nous avons donc choisis de découper les sons de notre jeu de données en échantillons de 1 seconde.
@@ -44,18 +44,19 @@ Nous en déduisons qu'une des raisons de la mauvaise performance de notre résea
 et que certains échantillons ne contiennent pas de chants d'oiseaux. 
 
 \pagebreak
-Nous avons réflechis à plusieurs façon de résoudre ce problème : 
+Nous avons réfléchi à plusieurs façons de résoudre ce problème : 
 \begin{itemize}
-  \item Controller manuellement la présence ou non de chant d'oiseau 
+  \item Contrôler manuellement la présence ou non de chant d'oiseau 
   \item Filtrer les sons automatiquement et supprimer les silences
   \item Entrainer un algorithme non supervisé pour permettre de détecter les échantillons potentiellement mal labélisés
 \end{itemize}
 
-Pour des raisons de temps et d'éfficacité, nous avons choisit la seconde approche. Pour cela, nous avons
-utilisé le script "Silence Remove" proposé dans l'article Audio Processing and Remove Silence using Python \cite{DataCleaning}
+Pour des raisons de temps et d'efficacité, nous avons choisi la seconde approche. Pour cela, nous avons
+utilisé le script "Silence Remove" proposé dans l'article \emph{Audio Processing and Remove Silence using Python} \cite{DataCleaning}
+
  
 Cette approche nous a finalement permis d'obtenir un taux de précision adéquat de 82\% sur les données de tests.
-Nous avons donc choisit d'utilisé cette solution pour la création de notre jeu de données.
+Nous avons donc choisi d'utilisé cette solution pour la création de notre jeu de données.
 
 Par la suite, il a été nécessaire de réduire la taille du réseau de neurone ainsi que la quantité de données le traversant.
 Nous avons donc réduit le réseau de neurone M5 de manière itérative, en essayant de garder une précision aussi élevée que possible.
@@ -72,12 +73,13 @@ Ce qui finalise notre flux  de travail Figure \ref{graph:final_workflow}.
 
 \section{Jeu de données}
 Notre jeu de données final contient un total de 33 105 échantillons de 1 seconde 
-répartis de manière équitable sur 10 classes.
+répartis de manière équitable sur 10 classes. 
+Celui-ci est disponible sur notre \href{https://drive.google.com/file/d/1zVLOBS-vfTlgu_EdVVaLhvU9dm-XX1qR/view?usp=sharing}{Google Drive}\cite{Dataset}
 
 \begin{center}
   \begin{tabular}{ |c|c|c|c| }
    \hline
-   \multicolumn{4}{|c|}{Jeu de données: Espèces d'oiseaux} \\
+   \multicolumn{4}{|c|}{Jeu de données : Espèces d'oiseaux} \\
    \hline
     Nom Français & Nom Anglais & Espèce & Nombre d'échantillons\\
    \hline
@@ -102,7 +104,7 @@ de minimiser les ressources utilisées par notre réseau de neurone. Pour cela l
 la taille et la quantité de données utilisée par le réseau (RAM et ROM) ainsi que le nombre 
 de paramètres du réseau (temps de calcul).
 
-Pour réduire la taille et le nombre de paramètre de paramètres de notre réseau, nous avons diminué le nombre de filtres de nos
+Pour réduire la taille et le nombre de paramètres de paramètres de notre réseau, nous avons diminué le nombre de filtres de nos
 Conv1D. Nous avons ensuite utilisé un MaxPool en entrée du réseau pour réduire la quantité de données initiales. 
 Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire le nombre de paramètres à 12 234.
 
@@ -137,9 +139,5 @@ Ceci a permi de ne pas dépasser la RAM disponible sur la carte et de réduire l
 \paragraph{DMA }
 \paragraph{ADC }
 
-
-• Description of the workflow to solve the problem described before (from training to
-embedded AI and communication). Add a figure illustrating that flow.
-• Description of the CNN model obtained after training by taking inspiration on the first labs
-• Presentation of the processing architecture of the sensor’s data
+• Presentation of the processing architecture of the sensor's data
 o Provide a definition of DMA and ADC

@@ -8,43 +8,7 @@ URL_REGEX = re.compile("https://xeno-canto.org/([0-9]+)/download")
 
 species_list = [
      { 
-        "name": "alauda arvensis", 
-        "page": 1
-     },
-     { 
-        "name": "emberiza citrinella", 
-        "page": 1
-     },
-     { 
-        "name": "sylvia borin", 
-        "page": 1
-     },
-     { 
-        "name": "delichon urbicum", 
-        "page": 1
-     },
-     { 
-        "name": "cuculus canorus", 
-        "page": 1
-     },
-     { 
-        "name": "muscicapa striata", 
-        "page": 1
-     },
-     { 
-        "name": "tachybaptus ruficollis", 
-        "page": 1
-     },
-     { 
-        "name": "emberiza cirlus", 
-        "page": 1
-     },
-     { 
-        "name": "tyto alba", 
-        "page": 1
-     },
-     { 
-        "name": "falco tinnunculus", 
+        "name": "", 
         "page": 1
      },
 ]

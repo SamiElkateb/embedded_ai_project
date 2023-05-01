@@ -1,0 +1,11 @@
+@startuml
+(*) --> "Création du dataset à partir de Xeno-canto"
+--> "Conversion en wav"
+--> "Réduction de la sample rate à 16 000"
+--> "Suppression des silences"
+--> "Découpage en segments de 1 seconde"
+--> "Entraînement du modèle"
+--> "Génération du modèle en C"
+--> "Téléversement sur la carte"
+--> "Tests en temps réel"
+@enduml

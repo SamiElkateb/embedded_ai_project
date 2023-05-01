@@ -67,7 +67,7 @@ def cut():
         if i % int(nb_files/10) == 0:
             logging.info(f"cut {i}/{nb_files} files" )
     
-def clean2():
+def denoise():
     remove_noise(DEST_DIR)
 
 # archives the destination folder
@@ -96,8 +96,8 @@ def __main(arg):
         clean()
     if arg == 'cut':
         cut()
-    if arg == 'clean2':
-        clean2()
+    if arg == 'denoise':
+        denoise()
     if arg == 'archive':
         archive()
     if arg == 'testfile':

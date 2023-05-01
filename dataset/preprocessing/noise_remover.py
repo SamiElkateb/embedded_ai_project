@@ -1,5 +1,5 @@
 import librosa
-from os import path, walk, remove, makedirs
+from os import path, walk, remove, makedirs, listdir
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
@@ -25,20 +25,18 @@ def load_data(data_path):
     labels = []
     filepaths = []
     label_encoder = LabelEncoder()
-    i = 0
-    for (dirpath, dirnames, filenames) in walk(data_path):
-        filepaths.extend(path.join(dirpath, filename) for filename in filenames if filename.endswith(".wav"))
-        labels.extend(dirnames)
-        i += 1
-        print("for")
-        if i == 2: break
-    print(labels)
-    for filepath in filepaths:
-        features = extract_features(filepath)
-        X.append(features)
-        i += 4
-        print("for")
-        if i > 4: break
+    for folder_name in listdir(data_path):
+        folder_path = path.join(data_path, folder_name)
+        try:
+            for file_name in listdir(folder_path):
+                file_path = path.join(folder_path, file_name)
+                features = extract_features(file_path)
+                X.append(features)
+                labels.append(folder_name)
+                filepaths.append(file_path)
+        except NotADirectoryError:
+            print("not a dir")
+            continue
     y = label_encoder.fit_transform(labels)
     return np.array(X), np.array(y), filepaths
 
@@ -49,15 +47,16 @@ def remove_files(data_path):
             misclasified_list.append(line.strip())
     for _, filepath in enumerate(misclasified_list):
         absolute_path = path.dirname(__file__)
-        full_path = path.join(absolute_path, filepath.replace('./dataset/', ''))
+        full_path = path.join(absolute_path, "../" + filepath.replace('./dataset/', ''))
         print(full_path)
-        # remove(full_path)
+        # break
+        remove(full_path)
 
 
 def remove_noise(data_path):
-    X, y, filepaths = load_data(data_path)
-    print("X", X)
-    print("y", y)
-    flag_potentially_noisy_data(X, y, filepaths, thres=.5, output_file=f"{data_path}/misclassified_data.txt")
+    # X, y, filepaths = load_data(data_path)
+    # print("X", X)
+    # print("y", y)
+    # flag_potentially_noisy_data(X, y, filepaths, thres=.5, output_file=f"{data_path}/misclassified_data.txt")
     remove_files(f"{data_path}/misclassified_data.txt")
 

@@ -1,7 +1,7 @@
 @startuml
 (*) --> "Création du dataset à partir de Xeno-canto"
 --> "Conversion en wav"
---> "Réduction de la sample rate à 16 000"
+--> "Réduction de la fréquence d'échantillonage à 16 000"
 --> "Suppression des silences"
 --> "Découpage en segments de 1 seconde"
 --> "Entraînement du modèle"

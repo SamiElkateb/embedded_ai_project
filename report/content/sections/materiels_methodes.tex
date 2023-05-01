@@ -6,7 +6,7 @@ Pour réaliser le jeu de données nécessaire à l'entrainement de notre réseau
 nous avons utilisé le site Xeno-Canto \cite{XenoCanto}. Celui-ci recense un grand nombre de chants d'oiseau
 de différentes espèces enregistrés par des utilisateurs.
 Cependant, les chants d'oiseaux enregistrés possèdent des caractéristiques différentes (durée d'enregistrement,
-format d'enregistrement, sample rate, bruit de fond).
+format d'enregistrement, fréquence d'échantilonnage, bruit de fond).
 Notre premier défi a donc été de créer un jeu de données permettant 
 d'obtenir des résultats corrects. 
 Pour cela, nous nous sommes fixé pour objectif d'obtenir une précision supérieure à 80\% sur les données de test
@@ -25,7 +25,7 @@ Nous avons donc suivi une approche itérative \ref{graph:iterative_workflow}
 Notre première approche a consisté à récupérer le son de 10 espèces d'oiseaux depuis Xeno-Canto puis
 à les convertir en .wav avant de tester le réseau de neurone M5 dessus.
 
-Pour ce faire nous avons développé en script de récupération de données (scrapping) en Python nous permettant de sélectionner les espèces 
+Pour ce faire nous avons développé un script de récupération de données (scrapping) en Python nous permettant de sélectionner les espèces 
 que nous voulions télécharger depuis le site. Lors de la récupération des sons, nous avons choisi de laisser 
 un délai de 1 seconde entre chaque téléchargement pour ne pas surcharger le site. Nous avons également utilisé un script 
 de conversion des fichiers en wav et de resampling en 16 000 Hz. Les scripts utilisés sont disponibles sur
@@ -43,6 +43,7 @@ les chants d'oiseau ne sont pas constant et il existe des périodes de silence.
 Nous en déduisons qu'une des raisons de la mauvaise performance de notre réseau de neurone 
 et que certains échantillons ne contiennent pas de chants d'oiseaux. 
 
+\pagebreak
 Nous avons réflechis à plusieurs façon de résoudre ce problème : 
 \begin{itemize}
   \item Controller manuellement la présence ou non de chant d'oiseau 
@@ -59,7 +60,7 @@ Nous avons donc finalement utilisé le flux de travail Figure \ref{graph:final_w
 
 
 \begin{figure}[!ht]
-  \includegraphics[width=0.5\textwidth]{final_workflow}
+  \includegraphics[width=0.3\textwidth]{final_workflow}
   \centering
   \caption{Workflow Final}
   \label{graph:final_workflow}
@@ -67,12 +68,8 @@ Nous avons donc finalement utilisé le flux de travail Figure \ref{graph:final_w
 
 
 \section{Jeu de données}
-• Description of the workflow to solve the problem described before (from training to
-embedded AI and communication). Add a figure illustrating that flow.
-• Description of the CNN model obtained after training by taking inspiration on the first labs
-• Presentation of the processing architecture of the sensor’s data
-o Provide a definition of DMA and ADC
-
+Notre jeu de données final contient un total de 33 105 échantillons de 1 seconde 
+répartis de manière équitable sur 10 classes.
 
 \begin{center}
   \begin{tabular}{ |c|c|c|c| }
@@ -124,3 +121,13 @@ o Provide a definition of DMA and ADC
 \end{center}
 
 \section{Architecture du traitement de données par le capteur}
+
+\paragraph{DMA }
+\paragraph{ADC }
+
+
+• Description of the workflow to solve the problem described before (from training to
+embedded AI and communication). Add a figure illustrating that flow.
+• Description of the CNN model obtained after training by taking inspiration on the first labs
+• Presentation of the processing architecture of the sensor’s data
+o Provide a definition of DMA and ADC
